@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-md-8">
-      <h2>Neus Haus</h2>
+      <h2>Haus hinzufügen</h2>
       <form [formGroup]="houseForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <div class="form-group">
@@ -27,8 +27,11 @@
           <ng-container class="form-group" formArrayName="persons">
             <div *ngFor="let _ of getPersons.controls; index as i;">
               <ng-container [formGroupName]="i">
+                <h3></h3>
                 <input class="form-control" formControlName="vorname" placeholder="Vorname">
+                <h3></h3>
                 <input class="form-control" formControlName="nachname" placeholder="Nachname">
+                <h3></h3>
                 <button class="btn btn-danger" (click)="removePerson(i)">X</button>
               </ng-container>
             </div>
