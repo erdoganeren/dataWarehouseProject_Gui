@@ -3,9 +3,13 @@ import {HomeComponent} from './home';
 import {LoginComponent} from './login';
 import {RegisterComponent} from './register';
 import {AuthGuard} from './_helpers';
+import {OrtComponent} from './ort';
+import {PersonComponent} from './person';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'ort', component: OrtComponent, canActivate: [AuthGuard] },
+  { path: 'person', component: PersonComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 

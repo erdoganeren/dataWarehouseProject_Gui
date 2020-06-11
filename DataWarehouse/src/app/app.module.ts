@@ -9,13 +9,17 @@ import {RegisterComponent} from './register';
 import {HomeComponent} from './home';
 import {appRoutingModule} from './app.routing';
 import {ErrorInterceptor, JwtInterceptor} from './_helpers';
+import {OrtComponent} from './ort';
+import {PersonComponent} from './person';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    OrtComponent,
+    PersonComponent
   ],
   imports: [
     BrowserModule,

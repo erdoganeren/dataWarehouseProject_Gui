@@ -1,5 +1,5 @@
 export class Ort {
-  id: number;
+  ortid: number;
   plz: number;
   ortsname: string;
 }

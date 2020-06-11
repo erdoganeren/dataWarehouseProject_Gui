@@ -1,0 +1,76 @@
+<div class="container-md">
+  <div class="row justify-content-md-center" style="margin-top: 150px">
+    <h2>Ort</h2>
+  </div>
+
+  <div class="row justify-content-md-center">
+    <form *ngIf="!update" [formGroup]="ortForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="ortsname">Ortsname</label>
+        <input type="text" formControlName="ortsname" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="plz">Plz</label>
+        <input type="number" formControlName="plz" class="form-control" />
+      </div>
+      <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Speichern
+        </button>
+      </div>
+    </form>
+
+    <form *ngIf="update" [formGroup]="ortForm" (ngSubmit)="onUpdate()">
+      <div class="form-group">
+        <button type="button" class="btn btn-primary" (click)="newOrt()">Neues Ort</button>
+      </div>
+      <div class="form-group">
+        <label for="ortsname">Ortsname</label>
+        <input type="text" formControlName="ortsname" [(ngModel)]="ort.ortsname" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <label for="plz">Plz</label>
+        <input type="number" formControlName="plz" [(ngModel)]="ort.plz" class="form-control"/>
+      </div>
+      <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Ort aktualisieren
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="justify-content-md-center">
+      <h2>Alle Orte</h2>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Ortsname</th>
+          <th scope="col">PLZ</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ort of orts">
+          <th scope="row">{{ort.id}}</th>
+          <td>{{ort.ortsname}}</td>
+          <td>{{ort.plz}}</td>
+          <td><button class="btn" (click)="updateElement(ort)"><i class="fa fa-pencil"></i></button></td>
+          <td><button class="btn" (click)="deleteElement(ort.id)"><i class="fa fa-trash"></i></button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
