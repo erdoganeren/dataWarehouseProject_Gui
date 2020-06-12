@@ -7,6 +7,9 @@ import {HouseService} from '../_services/house.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {HouseDAO} from '../_models/HauseDAO';
+import {PersonDAO} from '../_models/PersonDAO';
+import {OrtDAO} from '../_models/OrtDAO';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit {
@@ -14,7 +17,7 @@ export class HomeComponent implements OnInit {
   loading = false;
   currentUser: User;
   houses: House[];
-  house: House;
+  house: HouseDAO;
   orts: Ort[];
   persons: Person[];
   selectedPersons: Person[];
@@ -101,34 +104,40 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {
     this.loading = true;
-    // const house = new House();
-    // house.strasse = this.houseForm.get('strasse').value;
-    // house.hausnummer = this.houseForm.get('housenummer').value;
-    // house.ort = new Ort();
-    // house.ort.ortsname = this.houseForm.get('ortsname').value;
-    // house.ort.plz = this.houseForm.get('plz').value;
-    // house.personen = [];
-    // for (const person of this.houseForm.get('persons').value) {
-    //   house.personen.push(person);
-    // }
-    // // console.log(house);
-    // this.houseService.create(house)
-    //   .pipe(first())
-    //   .subscribe(
-    //     data => {
-    //       console.log(data);
-    //       this.houseService.getAll()
-    //         .pipe(first())
-    //         .subscribe(houses => {
-    //           this.houses = houses;
-    //           this.houseForm.reset();
-    //           this.loading = false;
-    //         });
-    //     },
-    //     error => {
-    //       console.log(error);
-    //       this.loading = false;
-    //     });
+    const house = new HouseDAO();
+    house.strasse = this.houseForm.get('strasse').value;
+    house.hausnummer = this.houseForm.get('housenummer').value;
+    house.ort = new OrtDAO();
+    house.ort.ortsname = this.selectedOrt.ortsname;
+    house.ort.plz = this.selectedOrt.plz;
+    house.personen = [];
+    this.selectedPersons.forEach(person => {
+      let personDao = new PersonDAO();
+      personDao.vorname = person.vorname;
+      personDao.nachname = person.nachname;
+      house.personen.push(personDao);
+    });
+    // console.log(house);
+    console.log(house);
+    this.houseService.create(house)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          this.houseService.getAll()
+            .pipe(first())
+            .subscribe(houses => {
+              this.houses = houses;
+              this.houseForm.reset();
+              this.loading = false;
+              this.selectedPersons = [];
+              this.selectedOrt = new Ort();
+            });
+        },
+        error => {
+          console.log(error);
+          this.loading = false;
+        });
   }
 
   onItemSelect(item: any) {
