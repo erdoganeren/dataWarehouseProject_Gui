@@ -13,6 +13,7 @@ export class OrtComponent implements OnInit {
   orts: Ort[];
   update = false;
   ort: Ort;
+  message = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +49,7 @@ export class OrtComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.message = data['message'];
           console.log(data);
           this.ortService.getAll()
             .pipe(first())
@@ -69,6 +71,7 @@ export class OrtComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.message = data['message'];
           console.log(data);
           this.ortService.getAll()
             .pipe(first())
@@ -99,7 +102,8 @@ export class OrtComponent implements OnInit {
   }
 
   deleteElement(ortid: number) {
-    this.ortService.delete(ortid).pipe(first()).subscribe(() => {
+    this.ortService.delete(ortid).pipe(first()).subscribe(data => {
+      this.message = data['message'];
       this.ortService.getAll()
         .pipe(first())
         .subscribe(orts => {

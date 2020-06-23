@@ -14,6 +14,7 @@ export class PersonComponent implements OnInit {
   persons: Person[];
   update = false;
   person: Person;
+  message = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,6 +51,7 @@ export class PersonComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this.message = data['message'];
           this.personService.getAll()
             .pipe(first())
             .subscribe(persons => {
@@ -71,6 +73,7 @@ export class PersonComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
+          this.message = data['message'];
           this.personService.getAll()
             .pipe(first())
             .subscribe(persons => {
@@ -99,15 +102,16 @@ export class PersonComponent implements OnInit {
     this.loadAllPersons();
   }
 
-  // deleteElement(personId: number) {
-  //   this.personService.delete(personId).pipe(first()).subscribe(() => {
-  //     this.personService.getAll()
-  //       .pipe(first())
-  //       .subscribe(persons => {
-  //         this.persons = persons;
-  //         this.person = new Person();
-  //         this.loading = false;
-  //       });
-  //   });
-  // }
+  deleteElement(personId: number) {
+    this.personService.delete(personId).pipe(first()).subscribe(data => {
+      this.message = data['message'];
+      this.personService.getAll()
+        .pipe(first())
+        .subscribe(persons => {
+          this.persons = persons;
+          this.person = new Person();
+          this.loading = false;
+        });
+    });
+  }
 }

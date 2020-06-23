@@ -1,6 +1,11 @@
 <div class="container-md">
   <div class="row justify-content-md-center" style="margin-top: 150px">
-    <h2>Person</h2>
+    <h2>Person</h2><br>
+  </div>
+  <div class="row justify-content-md-center">
+    <div *ngIf="message" class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
   </div>
 
   <div class="row justify-content-md-center">
@@ -56,6 +61,7 @@
           <th scope="col">Vorname</th>
           <th scope="col">Nachname</th>
           <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -64,6 +70,7 @@
           <td>{{person.vorname}}</td>
           <td>{{person.nachname}}</td>
           <td><button class="btn" (click)="updateElement(person)"><i class="fa fa-pencil"></i></button></td>
+          <td><button class="btn" (click)="deleteElement(person.id)"><i class="fa fa-trash"></i></button></td>
         </tr>
         </tbody>
       </table>

@@ -1,7 +1,10 @@
-<h1>Hi {{currentUser.email}}!</h1>
+<h4>Hi {{currentUser.email}}!</h4>
 <div class="container">
   <div class="row justify-content-md-center">
     <div class="col-md-8">
+      <div *ngIf="message" class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
       <h2>Haus hinzufügen</h2>
       <div class="form-group">
         <label>Ort auswählen</label>
@@ -54,6 +57,7 @@
           <th scope="col">Housenummer</th>
           <th scope="col">Adresse</th>
           <th scope="col">Personen</th>
+          <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -66,6 +70,7 @@
               {{person.nachname}} {{person.vorname}}
             </p>
           </td>
+          <td><button class="btn" (click)="deleteElement(house.id)"><i class="fa fa-trash"></i></button></td>
         </tr>
         </tbody>
       </table>

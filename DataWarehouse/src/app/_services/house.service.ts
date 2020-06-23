@@ -14,4 +14,8 @@ export class HouseService {
   create(house: HouseDAO) {
     return this.http.post('http://localhost:8080/haus', house);
   }
+
+  delete(houseId: number) {
+    return this.http.get('http://localhost:8080/hausdelete/' + houseId);
+  }
 }

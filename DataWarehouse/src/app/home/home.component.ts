@@ -6,7 +6,6 @@ import {UserService, AuthenticationService, PersonService, OrtService} from '../
 import {HouseService} from '../_services/house.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {HouseDAO} from '../_models/HauseDAO';
 import {PersonDAO} from '../_models/PersonDAO';
 import {OrtDAO} from '../_models/OrtDAO';
@@ -23,6 +22,7 @@ export class HomeComponent implements OnInit {
   selectedPersons: Person[];
   selectedOrt: Ort;
   dropdownSettings = {};
+  message = "";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -123,6 +123,7 @@ export class HomeComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
+          this.message = data['message'];
           console.log(data);
           this.houseService.getAll()
             .pipe(first())
@@ -132,6 +133,8 @@ export class HomeComponent implements OnInit {
               this.loading = false;
               this.selectedPersons = [];
               this.selectedOrt = new Ort();
+              this.loadAllOrts();
+              this.loadAllPersons();
             });
         },
         error => {
@@ -151,5 +154,14 @@ export class HomeComponent implements OnInit {
   onItemDeselect(item: any) {
     this.selectedPersons = this.selectedPersons.filter(entity => entity.id !== item.id);
     console.log(this.selectedPersons);
+  }
+
+  deleteElement(houseId: number) {
+    this.houseService.delete(houseId).pipe(first()).subscribe(data => {
+      this.loadAllHouses();
+      this.loadAllPersons();
+      this.loadAllOrts();
+      this.message = data['message'];
+    });
   }
 }
